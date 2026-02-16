@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Keerthi 💫</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            background: white;
+            border-radius: 25px;
+            padding: 50px 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .intro {
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+        .intro h1 {
+            font-size: 2.5em;
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+        .intro p {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .start-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.6);
+        }
+        .question-container {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideIn 0.6s ease-out forwards;
+            margin-top: 30px;
+        }
+        .question-container.active {
+            display: block;
+        }
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .question {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .question h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .question p {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .option-button {
+            background: white;
+            border: 3px solid #764ba2;
+            padding: 15px 25px;
+            font-size: 1.1em;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+            font-weight: 500;
+        }
+        .option-button:hover {
+            background: #764ba2;
+            color: white;
+            transform: translateX(10px);
+        }
+        .slider-container {
+            margin: 30px 0;
+        }
+        .slider {
+            width: 100%;
+            height: 50px;
+            background: #ddd;
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            user-select: none;
+        }
+        .slider-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcf7f);
+            border-radius: 25px;
+            transition: width 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3em;
+            width: 10%;
+        }
+        .slider-fill.animate {
+            transition: width 0.5s ease;
+        }
+        .slider-note {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+        .card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .card-front {
+            font-size: 2em;
+            color: #764ba2;
+            font-weight: bold;
+        }
+        .card-message {
+            display: none;
+            font-size: 1.2em;
+            color: #333;
+            line-height: 1.8;
+            animation: fadeIn 1s ease-out;
+        }
+        .card-message.show {
+            display: block;
+        }
+        .continue-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+        .continue-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(118, 75, 162, 0.6);
+        }
+        .final-note {
+            text-align: center;
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        .result-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            animation: fadeIn 1s ease-out;
+        }
+        .result-container.show {
+            display: block;
+        }
+        .result-container h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .result-container p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .happy-result h2 {
+            color: #6bcf7f;
+        }
+        .sad-result h2 {
+            color: #ff6b6b;
+        }
+        .soldier-animation {
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+            position: relative;
+        }
+        .soldier {
+            width: 60px;
+            height: 120px;
+            position: absolute;
+            left: 50%;
+            bottom: 50px;
+            transform: translateX(-50%);
+            animation: kneel 2s ease-out forwards;
+        }
+        .soldier-body {
+            width: 40px;
+            height: 60px;
+            background: #8b4513;
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            border-radius: 5px;
+        }
+        .soldier-head {
+            width: 30px;
+            height: 30px;
+            background: #d2b48c;
+            border-radius: 50%;
+            position: absolute;
+            top: -35px;
+            left: 15px;
+        }
+        .soldier-leg {
+            width: 15px;
+            height: 40px;
+            background: #654321;
+            position: absolute;
+            bottom: -40px;
+        }
+        .soldier-leg.left {
+            left: 8px;
+        }
+        .soldier-leg.right {
+            right: 8px;
+        }
+        .soldier-arm {
+            width: 12px;
+            height: 35px;
+            background: #8b4513;
+            position: absolute;
+            top: 10px;
+        }
+        .soldier-arm.left {
+            left: -10px;
+            transform: rotate(-20deg);
+        }
+        .soldier-arm.right {
+            right: -10px;
+            transform: rotate(20deg);
+        }
+        .arrow {
+            width: 4px;
+            height: 80px;
+            background: #654321;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            opacity: 0;
+            animation: arrowStrike 1s ease-out 1s forwards;
+        }
+        .arrow::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 15px solid #654321;
+            position: absolute;
+            top: -15px;
+            left: -6px;
+        }
+        @keyframes kneel {
+            0% {
+                bottom: 50px;
+                transform: translateX(-50%) rotate(0deg);
+            }
+            50% {
+                bottom: 40px;
+            }
+            100% {
+                bottom: 20px;
+                transform: translateX(-50%) rotate(5deg);
+            }
+        }
+        @keyframes arrowStrike {
+            0% {
+                opacity: 0;
+                top: -50px;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+                top: 50px;
+            }
+        }
+        .battlefield {
+            width: 100%;
+            height: 2px;
+            background: #654321;
+            position: absolute;
+            bottom: 10px;
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            animation: confettiFall 3s linear infinite;
+            z-index: 1000;
+        }
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        .celebration {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+        .clipboard-note {
+            background: #fffacd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 2px dashed #ffd700;
+            font-size: 0.95em;
+            color: #666;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Intro Section -->
+        <div class="intro" id="intro">
+            <h1>Hey Keerthi 💫</h1>
+            <p>I know this is sudden but you gotta answer them to know the purpose of this</p>
+            <button class="start-button" onclick="startQuestions()">Let's Go!</button>
+        </div>
+        <!-- Question 1 -->
+        <div class="question-container" id="q1">
+            <div class="question">
+                <h2>Question 1</h2>
+                <p>Do you still want us to be friends?</p>
+                <div class="options">
+                    <button class="option-button" onclick="nextQuestion(2)">Yes</button>
+                    <button class="option-button" onclick="nextQuestion(2)">No</button>
+                </div>
+            </div>
+        </div>
+        <!-- Question 2 -->
+        <div class="question-container" id="q2">
+            <div class="question">
+                <h2>Question 2</h2>
+                <p>I know you're gonna answer the above question yes, let's go to the next question!</p>
+                <p>On a scale of 1-10, how much are you gonna rate me as a friend?</p>
+                <div class="slider-container">
+                    <div class="slider" id="slider">
+                        <div class="slider-fill" id="sliderFill">1</div>
+                    </div>
+                    <div class="slider-note">Drag the slider to rate!</div>
+                </div>
+            </div>
+        </div>
+        <!-- Question 3 -->
+        <div class="question-container" id="q3">
+            <div class="question">
+                <h2>Question 3</h2>
+                <p>Since you value our friendship so much and been a great friend, I got to say something and I've been chickening out to say that all these days.</p>
+                <div class="options">
+                    <button class="option-button" onclick="nextQuestion(4)">Yes I wanna hear</button>
+                    <button class="option-button" onclick="nextQuestion(4)">You're a bitch but I'm nice so I'll consider hearing it</button>
+                </div>
+            </div>
+        </div>
+        <!-- Question 4 - Card -->
+        <div class="question-container" id="q4">
+            <div class="card" id="card" onclick="revealMessage()">
+                <div class="card-front" id="cardFront">✨ Tap Me ✨</div>
+                <div class="card-message" id="cardMessage">
+                    I should have told you sorry ages ago for making you very uncomfortable by saying some nonsense dreams and shit... you might wonder why I am telling you now and don't take this wrong I just want to be friends again I missed being that. But it took me time to gather everything and say it... Will you wish to be friends with me again?
+                    <br><br>
+                    <button class="continue-button" onclick="event.stopPropagation(); nextQuestion(5);">Continue</button>
+                </div>
+            </div>
+        </div>
+        <!-- Question 5 - Final Question -->
+        <div class="question-container" id="q5">
+            <div class="question">
+                <h2>Final Question</h2>
+                <p>Do you want to be best friends again and text regularly?</p>
+                <div class="options">
+                    <button class="option-button" onclick="showResult(true)">Yes</button>
+                    <button class="option-button" onclick="showResult(false)">No</button>
+                </div>
+                <div class="final-note">*I'm not gonna pull cheap tricks here, promise!</div>
+            </div>
+        </div>
+        <!-- Happy Result -->
+        <div class="result-container happy-result" id="happyResult">
+            <h2>🎉 Thank You! 🎉</h2>
+            <div class="celebration">💖 ✨ 🌟 💫 🎊</div>
+            <p>You have no idea how much this means to me! I promise to be a better friend and text regularly. Thank you for giving us another chance! 😊</p>
+            <p>Let's make new memories and keep the weird ones as inside jokes! 🤝</p>
+            <div class="clipboard-note">
+                📋 A special message has been copied to your clipboard! You can paste and send it to me if you want to! 💕
+            </div>
+        </div>
+        <!-- Sad Result -->
+        <div class="result-container sad-result" id="sadResult">
+            <h2>I Respect Your Choice</h2>
+            <div class="soldier-animation">
+                <div class="soldier">
+                    <div class="soldier-head"></div>
+                    <div class="soldier-body">
+                        <div class="soldier-arm left"></div>
+                        <div class="soldier-arm right"></div>
+                    </div>
+                    <div class="soldier-leg left"></div>
+                    <div class="soldier-leg right"></div>
+                    <div class="arrow"></div>
+                </div>
+                <div class="battlefield"></div>
+            </div>
+            <p>I understand and respect your decision. Thank you for taking the time to go through this. I genuinely hope you're doing well and wish you all the best. 💫</p>
+            <div class="clipboard-note">
+                📋 A message has been copied to your clipboard that you can send to me if you'd like to let me know.
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentQuestion = 0;
+        let isDragging = false;
+        let sliderReleased = false;
+        
+        function startQuestions() {
+            document.getElementById('intro').classList.add('hidden');
+            nextQuestion(1);
+        }
+        
+        function nextQuestion(questionNumber) {
+            // Hide current question
+            if (currentQuestion > 0) {
+                const current = document.getElementById('q' + currentQuestion);
+                if (current) {
+                    current.style.animation = 'fadeOut 0.3s ease-out';
+                    setTimeout(() => {
+                        current.classList.remove('active');
+                    }, 300);
+                }
+            }
+            
+            // Show next question
+            setTimeout(() => {
+                currentQuestion = questionNumber;
+                const next = document.getElementById('q' + questionNumber);
+                if (next) {
+                    next.classList.add('active');
+                }
+                
+                // Initialize slider for question 2
+                if (questionNumber === 2) {
+                    initSlider();
+                }
+            }, 300);
+        }
+        
+        function initSlider() {
+            const slider = document.getElementById('slider');
+            const sliderFill = document.getElementById('sliderFill');
+            
+            // Mouse events
+            slider.addEventListener('mousedown', startDragging);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDragging);
+            
+            // Touch events for mobile
+            slider.addEventListener('touchstart', startDragging);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', stopDragging);
+        }
+        
+        function startDragging(e) {
+            if (sliderReleased) return;
+            isDragging = true;
+            updateSlider(e);
+        }
+        
+        function drag(e) {
+            if (!isDragging || sliderReleased) return;
+            updateSlider(e);
+        }
+        
+        function stopDragging(e) {
+            if (!isDragging || sliderReleased) return;
+            isDragging = false;
+            sliderReleased = true;
+            
+            // Animate to 10
+            const sliderFill = document.getElementById('sliderFill');
+            sliderFill.classList.add('animate');
+            sliderFill.style.width = '100%';
+            sliderFill.textContent = '10! 💖';
+            
+            // Move to next question after animation
+            setTimeout(() => {
+                nextQuestion(3);
+            }, 1500);
+        }
+        
+        function updateSlider(e) {
+            const slider = document.getElementById('slider');
+            const sliderFill = document.getElementById('sliderFill');
+            const rect = slider.getBoundingClientRect();
+            
+            // Get x position (works for both mouse and touch)
+            let clientX;
+            if (e.type.startsWith('touch')) {
+                clientX = e.touches[0].clientX;
+            } else {
+                clientX = e.clientX;
+            }
+            
+            // Calculate percentage (minimum 10% for value 1)
+            let percentage = ((clientX - rect.left) / rect.width) * 100;
+            percentage = Math.max(10, Math.min(100, percentage)); // Clamp between 10% and 100%
+            
+            // Calculate value (1-10)
+            let value = Math.round((percentage / 100) * 10);
+            value = Math.max(1, Math.min(10, value));
+            
+            sliderFill.style.width = percentage + '%';
+            sliderFill.textContent = value;
+        }
+        
+        function revealMessage() {
+            const cardFront = document.getElementById('cardFront');
+            const cardMessage = document.getElementById('cardMessage');
+            const card = document.getElementById('card');
+            
+            cardFront.style.animation = 'fadeOut 0.5s ease-out';
+            setTimeout(() => {
+                cardFront.classList.add('hidden');
+                cardMessage.classList.add('show');
+                card.style.cursor = 'default';
+                card.onclick = null; // Remove click handler after revealing
+            }, 500);
+        }
+        
+        function showResult(isHappy) {
+            // Hide question 5
+            document.getElementById('q5').classList.remove('active');
+            
+            setTimeout(() => {
+                if (isHappy) {
+                    document.getElementById('happyResult').classList.add('show');
+                    makeItRain();
+                    copyToClipboard('YES! She said YES! 🎉💖 Keerthi wants to be friends again!');
+                } else {
+                    document.getElementById('sadResult').classList.add('show');
+                    copyToClipboard('Keerthi chose not to continue the friendship. She went through the whole thing though.');
+                }
+            }, 300);
+        }
+        
+        function makeItRain() {
+            const colors = ['#f093fb', '#f5576c', '#4facfe', '#00f2fe', '#ffd700', '#98ff98'];
+            for(let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+        
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    console.log('Message copied to clipboard!');
+                }).catch(err => {
+                    console.error('Could not copy text: ', err);
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    console.log('Message copied to clipboard!');
+                } catch (err) {
+                    console.error('Could not copy text: ', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+        
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
